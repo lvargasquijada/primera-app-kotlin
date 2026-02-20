@@ -1,5 +1,6 @@
 package com.example.app_kotlin
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,10 +10,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -28,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import com.example.app_kotlin.ui.theme.AppkotlinTheme
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,66 +39,48 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AppkotlinTheme {
-               CounterApp()
+                Scaffold() { innerPadding ->
+                    MainMenu(
+                        modifier = Modifier.padding(innerPadding)
+                    )
+                }
             }
         }
     }
 }
-
 
 @Composable
-fun CounterApp() {
+fun MainMenu(modifier: Modifier = Modifier) {
 
-    var count by rememberSaveable { mutableIntStateOf(0) }
+    val context = LocalContext.current
 
-    Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(onClick = { count++ }) {
-                Icon(Icons.Default.Add, contentDescription = "Increment")
-            }
-        }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-                .padding(24.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(24.dp)
+    ) {
+        Text("Mini Proyectos")
+
+        // Boton del CounterApp
+        Button(
+            onClick = {
+                val intent = Intent(context, CounterAppActivity::class.java)
+                context.startActivity(intent)
+            },
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Text(
-                text = "Presionaste el boton: "
-            )
-            Text(
-                text = "$count",
-                style = MaterialTheme.typography.displayLarge
-            )
+            Text("Counter App")
+        }
 
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                OutlinedButton(onClick = { count-- }) {
-                    Text("-1")
-                }
-                OutlinedButton(onClick = { count = 0}) {
-                    Text(" 0 ")
-                }
-            }
+        // Boton del TodoApp
+        Button(
+            onClick = {
+                val intent = Intent(context, TodoAppActivity::class.java)
+                context.startActivity(intent)
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Todo App")
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
