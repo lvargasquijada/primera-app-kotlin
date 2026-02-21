@@ -67,7 +67,7 @@ fun TodoApp(onBack: () -> Unit) {
 
     val todos = remember {
         mutableStateListOf(
-            TodoItem(id = 1, text = "Aprender Kotlin"),
+            TodoItem(id = 1, text = "Aprender Kotlin", done = true),
             TodoItem(id = 2, text = "Finalizar el curso")
         )
     }
@@ -129,11 +129,8 @@ fun TodoApp(onBack: () -> Unit) {
                     ElevatedCard(
                         modifier = Modifier.fillMaxWidth()
                             .clickable {
-                                Toast.makeText(
-                                    context,
-                                    "Click en el titulo",
-                                    Toast.LENGTH_SHORT).show()
-                                // A) Actualizar el "Done" false/true de la lista
+                                val index = todos.indexOf(task)
+                                todos[index] = task.copy(done = !task.done)
                             }
                     ) {
 
@@ -147,8 +144,11 @@ fun TodoApp(onBack: () -> Unit) {
                                 modifier = Modifier
                                     .weight(1f)
                                     .padding(horizontal = 4.dp),
-                                // B) Modificar el textDecoration (LineThrough) (true/false)
-                                textDecoration = androidx.compose.ui.text.style.TextDecoration.LineThrough
+                                textDecoration =
+                                    if (task.done)
+                                        androidx.compose.ui.text.style.TextDecoration.LineThrough
+                                    else
+                                        androidx.compose.ui.text.style.TextDecoration.None
                             )
 
                             IconButton(
