@@ -82,5 +82,16 @@ fun MainMenu(modifier: Modifier = Modifier) {
         ) {
             Text("Todo App")
         }
+
+        // Boton de TriviaApp
+        Button(
+            onClick = {
+                val intent = Intent(context, TriviaAppActivity::class.java)
+                context.startActivity(intent)
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Trivia App")
+        }
     }
 }
