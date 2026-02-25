@@ -1,7 +1,6 @@
 package com.example.app_kotlin
 
 import android.os.Bundle
-import android.widget.RadioButton
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
